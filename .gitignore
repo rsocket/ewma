@@ -1,0 +1,8 @@
+.gradle/
+build/
+node_modules/
+coverage/
+.idea
+*.iml
+.vscode
+jsconfig.json

@@ -1,0 +1,58 @@
+{
+  "name": "reactivesocket",
+  "version": "3.3.1",
+  "description": "reactive socket js core",
+  "bin": {
+    "rb": "bin/rsBench.js",
+    "rs": "bin/rs.js",
+    "rs-tcp-server": "bin/tcpServer.js",
+    "rs-ws-server": "bin/wsServer.js"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "all": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReactiveSocket/reactivesocket-js.git"
+  },
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "keywords": [
+    "reactive",
+    "socket",
+    "JS",
+    "core",
+    "reactive-socket",
+    "reactivesocket"
+  ],
+  "author": "Yunong J Xiao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ReactiveSocket/reactivesocket-js/issues"
+  },
+  "homepage": "https://github.com/ReactiveSocket/reactivesocket-js#readme",
+  "dependencies": {
+    "assert-plus": "^1.0.0",
+    "async": "^2.1.5",
+    "bunyan": "^1.8.5",
+    "dashdash": "^1.14.1",
+    "lodash": "^4.17.4",
+    "metrix": "^2.0.0",
+    "vasync": "^1.6.4",
+    "ws": "^1.1.1",
+    "yws-stream": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.16",
+    "eslint": "^3.16.0",
+    "istanbul": "^0.4.5",
+    "jscs": "^3.0.7",
+    "minimist": "^1.2.0",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7"
+  }
+}
