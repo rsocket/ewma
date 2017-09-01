@@ -20,7 +20,7 @@ e.g. with a half-life of 10 unit, if you insert 100 at t=0 and 200 at t=10 the
 ewma will be equal to (200 - 100)/2 = 150 (half of the distance between the new
 and the old value).
 
-### var ewma = new EWMA(halfLifeMs, initialValue, clock)
+### `var ewma = new EWMA(halfLifeMs, initialValue, clock)`
 
 * `halfLifeMs` - `{Number}` parameter representing the speed of convergence
 * `initialValue` - `{Number}` initial value
@@ -29,17 +29,17 @@ and the old value).
 
 returns an object computing the ewma average
 
-### ewma.insert(x)
+### `ewma.insert(x)`
 
 * `x` - The next value, `ewma` will automatically compute the EWMA based on the
         clock difference between this value and the last time `insert` was
         called
 
-### ewma.reset(x)
+### `ewma.reset(x)`
 
 * `x` - Set the EWMA to exactly `x`.
 
-### ewma.value()
+### `ewma.value()`
 
 Returns the current EWMA value.
 
