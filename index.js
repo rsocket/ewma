@@ -21,10 +21,17 @@ var assert = require('assert-plus');
  */
 function Ewma(halfLifeMs, initialValue, clock) {
     assert.number(halfLifeMs, 'halfLifeMs');
-    this._tau = halfLifeMs / Math.log(2);
-    this._stamp = 0;
+    assert.optionalNumber(initialValue, 'initialValue');
+    assert.optionalObject(clock, 'clock');
+
+    if (clock) {
+        assert.func(clock.now, 'clock.now');
+    }
+
+    this._decay = halfLifeMs;
     this._ewma = initialValue || 0;
     this._clock = clock || Date;
+    this._stamp = (typeof initialValue === 'number') ? clock.now() : 0;
 }
 
 module.exports = Ewma;
@@ -35,13 +42,13 @@ Ewma.prototype.insert = function insert(x) {
     var elapsed = now - self._stamp;
     self._stamp = now;
 
-    var w = Math.exp(-elapsed / self._tau);
+    var w = Math.pow(2, -elapsed / self._decay);
     self._ewma = w * self._ewma + (1.0 - w) * x;
 };
 
 Ewma.prototype.reset = function reset(x) {
     var self = this;
-    self._stamp = 0;
+    self._stamp = self._clock.now();
     self._ewma = x;
 };
 

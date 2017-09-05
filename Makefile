@@ -5,13 +5,16 @@ TOP		:= $(shell pwd)
 NODE_MODULES	:= $(TOP)/node_modules
 NPM		:= npm
 NODE_BIN	:= $(shell $(NPM) bin)
-ESLINT		= $(NODE_BIN)/eslint
-JSCS		= $(NODE_BIN)/jscs
+ESLINT		:= $(NODE_BIN)/eslint
+JSCS		:= $(NODE_BIN)/jscs
+TAPE		:= $(NODE_BIN)/tape
+NYC		:= $(NODE_BIN)/nyc
 
 #
 # Files
 #
 JS_FILES	:= index.js
+TEST_FILES	:= test/index.js
 CLEAN_FILES	+= node_modules
 
 #
@@ -28,6 +31,10 @@ lint: node_modules $(ESLINT) $(JS_FILES)
 style: node_modules $(JSCS) $(JS_FILES)
 	$(JSCS) $(JS_FILES)
 
+.PHONY: test
+test: node_modules $(TAPE) $(NYC)
+	$(NYC) $(TAPE) $(TEST_FILES)
+
 .PHONY: fixstyle
 fixstyle: node_modules $(JSCS) $(JS_FILES)
 	$(JSCS) --fix $(JS_FILES)
@@ -37,7 +44,7 @@ node_modules: package.json
 	@touch node_modules
 
 .PHONY: check
-check: lint style
+check: lint style test
 
 .PHONY: clean
 clean:
