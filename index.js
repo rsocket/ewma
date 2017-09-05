@@ -42,6 +42,16 @@ Ewma.prototype.insert = function insert(x) {
     var elapsed = now - self._stamp;
     self._stamp = now;
 
+    // This seemingly magic equation is derived from the fact that we are
+    // defining a half life for each value. A half life is the amount of time
+    // that it takes for a value V to decay to .5V or V/2. Elapsed is the time
+    // delta between this value being reported and the previous value being
+    // reported. Given the half life, and the amount of time since the last
+    // reported value, this equation determines how much the new value should
+    // be represented in the ewma.
+    // For a detailed proof read:
+    // A Framework for the Analysis of Unevenly Spaced Time Series Data
+    // Eckner, 2014
     var w = Math.pow(2, -elapsed / self._decay);
     self._ewma = w * self._ewma + (1.0 - w) * x;
 };
