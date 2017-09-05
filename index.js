@@ -21,10 +21,17 @@ var assert = require('assert-plus');
  */
 function Ewma(halfLifeMs, initialValue, clock) {
     assert.number(halfLifeMs, 'halfLifeMs');
-    this._tau = halfLifeMs / Math.log(2);
-    this._stamp = 0;
+    assert.optionalNumber(initialValue, 'initialValue');
+    assert.optionalObject(clock, 'clock');
+
+    if (clock) {
+        assert.func(clock.now, 'clock.now');
+    }
+
+    this._decay = halfLifeMs;
     this._ewma = initialValue || 0;
     this._clock = clock || Date;
+    this._stamp = (typeof initialValue === 'number') ? clock.now() : 0;
 }
 
 module.exports = Ewma;
@@ -35,13 +42,23 @@ Ewma.prototype.insert = function insert(x) {
     var elapsed = now - self._stamp;
     self._stamp = now;
 
-    var w = Math.exp(-elapsed / self._tau);
+    // This seemingly magic equation is derived from the fact that we are
+    // defining a half life for each value. A half life is the amount of time
+    // that it takes for a value V to decay to .5V or V/2. Elapsed is the time
+    // delta between this value being reported and the previous value being
+    // reported. Given the half life, and the amount of time since the last
+    // reported value, this equation determines how much the new value should
+    // be represented in the ewma.
+    // For a detailed proof read:
+    // A Framework for the Analysis of Unevenly Spaced Time Series Data
+    // Eckner, 2014
+    var w = Math.pow(2, -elapsed / self._decay);
     self._ewma = w * self._ewma + (1.0 - w) * x;
 };
 
 Ewma.prototype.reset = function reset(x) {
     var self = this;
-    self._stamp = 0;
+    self._stamp = self._clock.now();
     self._ewma = x;
 };
 

@@ -6,3 +6,5 @@ coverage/
 *.iml
 .vscode
 jsconfig.json
+.nyc_output
+package-lock.json
