@@ -9,7 +9,7 @@ An exponential weighted moving average for Node.js and the browser!
 npm install -g ewma
 ```
 
-# Usage
+## Usage
 
 Compute the exponential weighted moving average of a series of values.  The
 time at which you insert the value into `Ewma` is used to compute a weight
@@ -43,7 +43,7 @@ returns an object computing the ewma average
 
 Returns the current EWMA value.
 
-### Examples
+## Examples
 
 These are generated using a 500ms interval with a half life indicated in the
 key. For the source code, or to reproduce yourself, check the
