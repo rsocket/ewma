@@ -43,6 +43,16 @@ returns an object computing the ewma average
 
 Returns the current EWMA value.
 
+### Examples
+
+These are generated using a 500ms interval with a half life indicated in the
+key. For the source code, or to reproduce yourself, check the
+[Example](./example) directory.
+
+![](./example/abs.png)
+![](./example/sin.png)
+![](./example/sawtooth.png)
+
 ## Contributions
 Contributions welcome, please ensure `make` runs clean.
 
