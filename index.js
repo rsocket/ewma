@@ -21,22 +21,26 @@ var assert = require('assert-plus');
  */
 function Ewma(halfLifeMs, initialValue, clock) {
     assert.number(halfLifeMs, 'halfLifeMs');
+    assert.ok(!Number.isNaN(halfLifeMs), 'halfLifeMs can not be NaN');
     assert.optionalNumber(initialValue, 'initialValue');
-    assert.optionalObject(clock, 'clock');
+    assert.ok(!Number.isNaN(initialValue), 'initialValue can not be NaN');
 
-    if (clock) {
+    if (clock !== undefined) {
         assert.func(clock.now, 'clock.now');
     }
 
     this._decay = halfLifeMs;
     this._ewma = initialValue || 0;
     this._clock = clock || Date;
-    this._stamp = (typeof initialValue === 'number') ? clock.now() : 0;
+    this._stamp = (typeof initialValue === 'number') ? this._clock.now() : 0;
 }
 
 module.exports = Ewma;
 
 Ewma.prototype.insert = function insert(x) {
+    assert.number(x, 'x');
+    assert.ok(!Number.isNaN(x), 'x can not be NaN');
+
     var self = this;
     var now = self._clock.now();
     var elapsed = now - self._stamp;
@@ -57,6 +61,9 @@ Ewma.prototype.insert = function insert(x) {
 };
 
 Ewma.prototype.reset = function reset(x) {
+    assert.number(x, 'x');
+    assert.ok(!Number.isNaN(x), 'x can not be NaN');
+
     var self = this;
     self._stamp = self._clock.now();
     self._ewma = x;
