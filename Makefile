@@ -13,8 +13,8 @@ NYC		:= $(NODE_BIN)/nyc
 #
 # Files
 #
-JS_FILES	:= index.js
 TEST_FILES	:= test/index.js
+JS_FILES	:= index.js $(TEST_FILES)
 CLEAN_FILES	+= node_modules
 
 #
